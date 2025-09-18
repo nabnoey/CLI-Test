@@ -1,13 +1,28 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <title>Summary Data</title>
+</head>
+<body>                                  
+  <h1>Summary</h1>
+  <button id="loadBtn">โหลดข้อมูล</button>
+  <div id="result"></div>
+
+  <script>
+    document.getElementById('loadBtn').addEventListener('click', async () => {
+      try {
+        const res = await fetch(' http://localhost:3001/api'); 
+        const data = await res.json();
+        document.getElementById('result').innerHTML = `
+          <p>จำนวนรายการ: ${data.totalItems}</p>
+          <p>ผลรวมค่า value: ${data.totalValue}</p>
+        `;
+      } catch (err) {
+        document.getElementById('result').innerText = 'เกิดข้อผิดพลาดในการโหลดข้อมูล';
+        console.error(err);
+      }
+    });
+  </script>
+</body>
 </html>
